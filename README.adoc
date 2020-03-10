@@ -1,0 +1,29 @@
+= Haldus
+
+image:https://img.shields.io/badge/haldus-1.0.0-orange.svg[link="https://gitee.com/starlit/haldus"]
+
+@Powered by
+image:https://img.shields.io/badge/vert.x-3.7.1-purple.svg[link="https://vertx.io"]
+
+This application was generated using http://start.vertx.io
+
+== Building
+
+To launch your tests:
+```
+./gradlew clean test
+```
+
+To package your application:
+```
+./gradlew clean assemble
+```
+
+To run your application:
+```
+./gradlew clean run
+```
+
+== Help
+
+* https://vertx.io/docs/[Vert.x Documentation]

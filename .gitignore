@@ -1,0 +1,10 @@
+.idea
+.vscode
+.atom
+.sublime
+
+*.class
+*.iml
+
+target
+build
