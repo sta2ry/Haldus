@@ -16,7 +16,7 @@ class TestMainVerticle {
 
   @BeforeEach
   fun deploy_verticle(vertx: Vertx, testContext: VertxTestContext) {
-    vertx.deployVerticle(MainVerticle(), testContext.succeeding<String> { _ -> testContext.completeNow() })
+    vertx.deployVerticle(MainVerticle(), testContext.succeeding { testContext.completeNow() })
   }
 
   @Test
@@ -24,7 +24,8 @@ class TestMainVerticle {
   @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
   @Throws(Throwable::class)
   fun start_http_server(vertx: Vertx, testContext: VertxTestContext) {
-    vertx.createHttpClient().getNow(8888, "localhost", "/") { response ->
+    vertx.createHttpClient().get(8888, "localhost", "/") { result ->
+      val response = result.result()
       testContext.verify {
         assertTrue(response.statusCode() == 200)
         response.handler { body ->

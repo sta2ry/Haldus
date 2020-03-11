@@ -4,7 +4,6 @@ import io.vertx.config.ConfigRetriever
 import io.vertx.config.ConfigRetrieverOptions
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.DeploymentOptions
-import io.vertx.core.Future
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.kotlin.config.configRetrieverOptionsOf
@@ -21,16 +20,15 @@ class MainVerticle : AbstractVerticle() {
     @Inject
     private var userHandler: UserHandler? = null
 
-    override fun start(startFuture: Future<Void>) {
+    override fun start() {
         val router = Router.router(vertx)
         router.route().path("/user/*").handler(userHandler)
 
         vertx.createHttpServer().requestHandler(router).listen(8888) { http ->
             if (http.succeeded()) {
-                startFuture
                 println("HTTP server started on port 8888")
             } else {
-                startFuture.fail(http.cause())
+                println("Start Error")
             }
         }
     }
@@ -55,7 +53,7 @@ fun main() {
     }
     // listen is called each time configuration changes
     configRetriever.listen { change ->
-        val updatedConfiguration = change.getNewConfiguration()
+        val updatedConfiguration = change.newConfiguration
         vertx.eventBus().publish(EventBusChannels.CONFIGURATION_CHANGED.name, updatedConfiguration)
     }
 }

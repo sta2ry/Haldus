@@ -1,4 +1,4 @@
-package org.featx.sta2ry.haldus;
+package org.featx.sta2ry.haldus
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
@@ -7,6 +7,7 @@ import io.vertx.core.json.JsonObject
 import io.vertx.reactivex.ext.jdbc.JDBCClient
 import io.vertx.reactivex.ext.sql.SQLClient
 import io.vertx.reactivex.redis.client.Redis
+import io.vertx.redis.client.RedisOptions
 import org.featx.sta2ry.haldus.service.SessionService
 import org.featx.sta2ry.haldus.service.SessionServiceImpl
 import org.featx.sta2ry.haldus.service.UserService
@@ -50,11 +51,14 @@ class AppContext : AbstractModule() {
     @Provides
     @Singleton
     fun provideRedis(vertx: Vertx): Redis {
-        return Redis.createClient(io.vertx.reactivex.core.Vertx(vertx), JsonObject()
-                .put("host", config.getString("redis.host", "localhost"))
-                .put("port", config.getInteger("redis.port", 6379))
-                .put("select", config.getInteger("redis.db", 0))
-                .put("auth", config.getString("redis.password", "root"))
+        return Redis.createClient(
+            io.vertx.reactivex.core.Vertx(vertx), RedisOptions(
+                JsonObject()
+                    .put("host", config.getString("redis.host", "localhost"))
+                    .put("port", config.getInteger("redis.port", 6379))
+                    .put("select", config.getInteger("redis.db", 0))
+                    .put("auth", config.getString("redis.password", "root"))
+            )
         )
     }
 }
