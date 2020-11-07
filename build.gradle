@@ -1,13 +1,7 @@
 plugins {
   id 'application'
-  id 'org.jetbrains.kotlin.jvm' version '1.3.70'
-  id 'com.github.johnrengelman.shadow' version '5.2.0'
-}
-
-ext {
-  kotlinVersion = '1.3.70'
-  vertxVersion = '4.0.0-SNAPSHOT'
-  junitJupiterEngineVersion = '5.6.0'
+  id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+  id 'com.github.johnrengelman.shadow' version "${johnrengelmanShadowVersion}"
 }
 
 group = 'org.featx.sta2ry.haldus'
