@@ -49,7 +49,7 @@ fun main() {
         config.put("guice_binder", AppContext::class.java.name)
         val instances = Runtime.getRuntime().availableProcessors()
         val deploymentOptions = DeploymentOptions().setInstances(instances).setConfig(config)
-        vertx.deployVerticle("java-guice:" + MainVerticle::class.java.name, deploymentOptions)
+        vertx.deployVerticle("featx-guice:" + MainVerticle::class.java.name, deploymentOptions)
     }
     // listen is called each time configuration changes
     configRetriever.listen { change ->
@@ -85,7 +85,7 @@ fun getConfigRetrieverOptions(): ConfigRetrieverOptions {
     return configRetrieverOptionsOf(
         includeDefaultStores = true,
         //Tested, priority raised as order.
-        stores = listOf(sysPropsStore, fileStore, httpStore),
+        stores = listOf(sysPropsStore, fileStore/*, httpStore*/),
         scanPeriod = 5000
     )
 }

@@ -51,20 +51,16 @@ class UserHandler : BaseHandler() {
     }
 
     private fun toUserEntity(userInfo: UserInfo): UserEntity {
-        return UserEntity(
-            userInfo.id,
-            userInfo.code,
-            userInfo.name,
-            userInfo.type,
-            userInfo.username,
-            "",
-            true,
+        val result = UserEntity(
+            userInfo.username, "", true,
             userInfo.avatar,
-            userInfo.email,
-            false,
-            userInfo.phone,
-            false
-        )
+            userInfo.email, false,
+            userInfo.phone, false);
+        result.code = userInfo.code;
+        result.id = userInfo.id
+        result.name = userInfo.name
+        result.type = userInfo.type
+        return result
     }
 
     fun getUserInfo(request: HttpServerRequest): Single<UserInfo> {

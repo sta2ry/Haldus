@@ -37,20 +37,16 @@ class UserServiceImpl : UserService {
     }
 
     private fun toUserEntity(userData: UserData): UserEntity {
-        return UserEntity(
-            userData.id,
-            userData.code,
-            userData.name,
-            userData.type,
-            userData.username,
-            userData.password,
-            userData.enable,
-            userData.avatar,
-            userData.email,
-            userData.emailVerified,
-            userData.phone,
-            userData.emailVerified
-        )
+        val result = UserEntity(
+            userData.username, userData.password,
+            userData.enable, userData.avatar,
+            userData.email, userData.emailVerified,
+            userData.phone, userData.phoneVerified)
+        result.id = userData.id
+        result.code = userData.code
+        result.name = userData.name
+        result.type = userData.type
+        return result
     }
 
     override fun find(key: String, value: String): Single<UserEntity> {

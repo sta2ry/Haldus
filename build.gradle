@@ -1,25 +1,34 @@
 plugins {
-  id 'application'
-  id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
-  id 'com.github.johnrengelman.shadow' version "${johnrengelmanShadowVersion}"
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+    id 'com.github.johnrengelman.shadow' version "${johnrengelmanShadowVersion}"
 }
 
 group = 'org.featx.sta2ry.haldus'
 version = '1.0.0-SNAPSHOT'
 
 repositories {
-  maven {
-    url 'https://oss.sonatype.org/content/repositories/snapshots'
-    mavenContent {
-      snapshotsOnly()
+    mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
+//        maven { url "https://artifacts.elastic.co/maven" }
+    maven {
+        url = uri("https://repo.rdc.aliyun.com/repository/67417-release-5dYQ7a/")
+        credentials {
+            username = "${MVN_USERNAME}"
+            password = "${MVN_PASSWORD}"
+        }
     }
-  }
-  mavenCentral()
-  jcenter()
+    maven {
+        url = uri("https://repo.rdc.aliyun.com/repository/67417-snapshot-6tKIEl/")
+        credentials {
+            username = "${MVN_USERNAME}"
+            password = "${MVN_PASSWORD}"
+        }
+    }
 }
 
 application {
-  mainClassName = 'io.vertx.core.Launcher'
+    mainClassName = 'io.vertx.core.Launcher'
 }
 
 def mainVerticleName = 'org.featx.sta2ry.haldus.MainVerticle'
@@ -27,54 +36,56 @@ def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
 dependencies {
-  implementation "io.vertx:vertx-circuit-breaker:$vertxVersion"
-  implementation "io.vertx:vertx-service-discovery:$vertxVersion"
-  implementation "io.vertx:vertx-consul-client:$vertxVersion"
-  implementation "io.vertx:vertx-redis-client:$vertxVersion"
-  
-  implementation "io.vertx:vertx-web:$vertxVersion"
-  implementation "io.vertx:vertx-config:$vertxVersion"
-  implementation "io.vertx:vertx-jdbc-client:$vertxVersion"
-  implementation "io.vertx:vertx-core:$vertxVersion"
-  implementation "io.vertx:vertx-rx-java2:$vertxVersion"
-  implementation "io.vertx:vertx-lang-kotlin:$vertxVersion"
-  implementation 'com.englishtown.vertx:vertx-guice:2.3.1'
+    implementation "io.vertx:vertx-circuit-breaker:$vertxVersion"
+    implementation "io.vertx:vertx-service-discovery:$vertxVersion"
+    implementation "io.vertx:vertx-consul-client:$vertxVersion"
+    implementation "io.vertx:vertx-redis-client:$vertxVersion"
 
-  implementation 'com.zaxxer:HikariCP:3.4.2'
-  implementation 'mysql:mysql-connector-java:8.0.17'
-  implementation "io.vertx:vertx-mysql-postgresql-client:$vertxVersion"
+    implementation "io.vertx:vertx-web:$vertxVersion"
+    implementation "io.vertx:vertx-config:$vertxVersion"
+    implementation "io.vertx:vertx-jdbc-client:$vertxVersion"
+    implementation "io.vertx:vertx-core:$vertxVersion"
+    implementation "io.vertx:vertx-rx-java2:$vertxVersion"
+    implementation "io.vertx:vertx-lang-kotlin:$vertxVersion"
+    implementation "com.google.inject:guice:$guiceVersion"
+    implementation "org.featx.vertx:vertx-guice:$vertxVersion"
 
-  testImplementation "io.vertx:vertx-junit5:$vertxVersion"
-  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion"
-  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterEngineVersion"
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.featx.spec:spec:${featxSpecVersion}"
+    implementation 'com.zaxxer:HikariCP:3.4.2'
+    implementation 'mysql:mysql-connector-java:8.0.17'
+//  implementation "io.vertx:vertx-mysql-postgresql-client:$vertxVersion"
+
+    testImplementation "io.vertx:vertx-junit5:$vertxVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterEngineVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 compileKotlin {
-  kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 compileTestKotlin {
-  kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 shadowJar {
-  classifier = 'fat'
-  manifest {
-    attributes 'Main-Verticle': mainVerticleName
-  }
-  mergeServiceFiles {
-    include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
-  }
+    classifier = 'fat'
+    manifest {
+        attributes 'Main-Verticle': mainVerticleName
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
 }
 
 test {
-  useJUnitPlatform()
-  testLogging {
-    events 'PASSED', 'FAILED', 'SKIPPED'
-  }
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
 }
 
 run {
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
 }
