@@ -1,1 +1,6 @@
 rootProject.name = 'haldus'
+include("haldus-spec")
+include("haldus-vert")
+include("haldus-norm")
+include("haldus-bsns")
+include("haldus-data")

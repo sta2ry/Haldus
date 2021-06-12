@@ -1,0 +1,10 @@
+plugins {
+    id ("application")
+}
+
+dependencies {
+    compileOnly("org.featx.spec:spec:${featxSpecVersion}")
+
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+}

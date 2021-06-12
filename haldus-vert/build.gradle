@@ -1,0 +1,60 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+}
+
+application {
+    mainClassName = 'io.vertx.core.Launcher'
+}
+
+def mainVerticleName = 'org.featx.sta2ry.haldus.MainVerticle'
+def watchForChange = 'src/**/*'
+def doOnChange = './gradlew classes'
+
+dependencies {
+    implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
+    implementation("io.vertx:vertx-service-discovery")
+    implementation("io.vertx:vertx-config")
+    implementation("io.vertx:vertx-config-consul")
+    implementation("io.vertx:vertx-consul-client")
+    implementation("io.vertx:vertx-circuit-breaker")
+    implementation("io.vertx:vertx-health-check")
+
+    implementation("io.vertx:vertx-web")
+    implementation("io.vertx:vertx-web-api-contract")
+    implementation("io.vertx:vertx-web-sstore-redis")
+    implementation("io.vertx:vertx-web-openapi")
+    implementation("io.vertx:vertx-web-client")
+    implementation("io.vertx:vertx-web-validation")
+
+    implementation("io.vertx:vertx-redis-client")
+    implementation("io.vertx:vertx-mysql-client")
+//  implementation("io.vertx:vertx-jdbc-client")
+
+//  implementation("io.vertx:vertx-rx-java3")
+//  implementation("io.vertx:vertx-reactive-streams")
+    implementation("com.google.inject:guice:$guiceVersion")
+    implementation("io.vertx:vertx-lang-kotlin")
+    implementation("io.vertx:vertx-lang-kotlin-coroutines")
+//  implementation("io.vertx:vertx-core")
+    implementation("com.zaxxer:HikariCP:$hikariVersion")
+    implementation("org.mariadb:r2dbc-mariadb:1.0.1")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    testImplementation("io.vertx:vertx-junit5")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "${javaVersion}"
+    }
+}
+
+run {
+    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+}
