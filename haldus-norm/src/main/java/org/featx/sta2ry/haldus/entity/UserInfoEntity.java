@@ -1,8 +1,6 @@
 package org.featx.sta2ry.haldus.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.featx.spec.entity.AbstractUnified;
 
 import java.io.Serial;
@@ -13,6 +11,9 @@ import java.io.Serial;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserInfoEntity extends AbstractUnified<Long> {
     @Serial
     private static final long serialVersionUID = -1160352953062743575L;
@@ -20,6 +21,8 @@ public class UserInfoEntity extends AbstractUnified<Long> {
     private String username;
 
     private String password;
+
+    private Boolean enable;
 
     private String avatar;
 

@@ -1,0 +1,21 @@
+plugins {
+    id ("java")
+    id ("org.jetbrains.kotlin.jvm") version "$kotlinVersion"
+}
+
+dependencies {
+    implementation(project(":haldus-norm"))
+
+    implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
+    implementation("io.vertx:vertx-mysql-client")
+    implementation("io.vertx:vertx-lang-kotlin")
+    implementation("io.vertx:vertx-lang-kotlin-coroutines")
+
+    implementation("com.zaxxer:HikariCP:$hikariVersion")
+    implementation("org.mariadb:r2dbc-mariadb:1.0.1")
+    implementation("com.google.inject:guice:$guiceVersion")
+
+    compileOnly("org.featx.spec:spec:${featxSpecVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+}

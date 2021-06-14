@@ -2,26 +2,27 @@ package org.featx.sta2ry.haldus
 
 import com.google.inject.Guice
 import com.google.inject.Stage
-import org.featx.sta2ry.haldus.enums.EventBusChannels
-import org.featx.sta2ry.haldus.handler.UserHandler
 import io.vertx.config.ConfigRetriever
 import io.vertx.config.ConfigRetrieverOptions
-import io.vertx.core.*
+import io.vertx.core.AbstractVerticle
+import io.vertx.core.DeploymentOptions
+import io.vertx.core.Promise
+import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.kotlin.config.configRetrieverOptionsOf
 import io.vertx.kotlin.config.configStoreOptionsOf
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
+import org.featx.sta2ry.haldus.enums.EventBusChannels
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
 class MainVerticle : AbstractVerticle() {
 
   @Inject
-  private lateinit var userHandler: UserHandler
+  private lateinit var router: Router
 
   override fun start(startPromise: Promise<Void>) {
-
     vertx
       .createHttpServer()
       .requestHandler(router)
@@ -30,7 +31,7 @@ class MainVerticle : AbstractVerticle() {
           startPromise.complete()
           println("HTTP server started on port 8888")
         } else {
-          startPromise.fail(http.cause());
+          startPromise.fail(http.cause())
         }
       }
   }
@@ -53,14 +54,14 @@ fun main(args: Array<String>) {
     val instances = Runtime.getRuntime().availableProcessors()
     val deploymentOptions = DeploymentOptions().setInstances(instances).setConfig(config)
 
-    val injector = Guice.createInjector(Stage.PRODUCTION, AppContext(vertx))
+    val injector = Guice.createInjector(Stage.PRODUCTION, DataContext(vertx), AppContext(vertx))
     vertx.registerVerticleFactory(GuiceVerticleFactory(injector))
 
-    vertx.deployVerticle("org.featx.cusp.user:" + MainVerticle::class.java.name, deploymentOptions)
+    vertx.deployVerticle("org.featx.sta2ry.haldus:" + MainVerticle::class.java.name, deploymentOptions)
   }
   // listen is called each time configuration changes
   configRetriever.listen { change ->
-    val updatedConfiguration = change.getNewConfiguration()
+    val updatedConfiguration = change.newConfiguration
     vertx.eventBus().publish(EventBusChannels.CONFIGURATION_CHANGED.name, updatedConfiguration)
   }
 }
