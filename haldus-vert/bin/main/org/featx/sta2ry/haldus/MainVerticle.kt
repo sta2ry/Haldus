@@ -1,5 +1,6 @@
 package org.featx.sta2ry.haldus
 
+import com.fasterxml.jackson.module.kotlin.kotlinModule
 import com.google.inject.Guice
 import com.google.inject.Stage
 import io.vertx.config.ConfigRetriever
@@ -8,6 +9,7 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.DeploymentOptions
 import io.vertx.core.Promise
 import io.vertx.core.Vertx
+import io.vertx.core.json.jackson.DatabindCodec
 import io.vertx.ext.web.Router
 import io.vertx.kotlin.config.configRetrieverOptionsOf
 import io.vertx.kotlin.config.configStoreOptionsOf
@@ -39,6 +41,7 @@ class MainVerticle : AbstractVerticle() {
 
 
 fun main(args: Array<String>) {
+  DatabindCodec.mapper().registerModule(kotlinModule())
   val vertx = Vertx.vertx()
   val configRetrieverOptions = getConfigRetrieverOptions()
   val configRetriever = ConfigRetriever.create(vertx, configRetrieverOptions)

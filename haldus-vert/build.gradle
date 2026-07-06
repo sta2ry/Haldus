@@ -1,10 +1,11 @@
 plugins {
     id 'application'
+    id 'com.gradleup.shadow' version '9.0.0-beta10'
     id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
 }
 
 application {
-    mainClass.set("io.vertx.launcher.application.VertxApplication")
+    mainClass.set("org.featx.sta2ry.haldus.MainVerticleKt")
 }
 
 def mainVerticleName = 'org.featx.sta2ry.haldus.MainVerticle'
@@ -41,11 +42,14 @@ dependencies {
 
     implementation("io.vertx:vertx-lang-kotlin")
     implementation("io.vertx:vertx-lang-kotlin-coroutines")
+    implementation("io.vertx:vertx-launcher-application")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
     implementation("io.vertx:vertx-auth-jwt")
     implementation("io.vertx:vertx-auth-oauth2")
     implementation("at.favre.lib:bcrypt:0.10.2")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
 
     testImplementation("io.vertx:vertx-junit5")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -61,5 +65,13 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 }
 
 run {
-    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClass", "--on-redeploy=$doOnChange"]
+    args = []
+}
+
+shadowJar {
+    archiveClassifier.set("all")
+    manifest {
+        attributes 'Main-Verticle': mainVerticleName
+    }
+    mergeServiceFiles()
 }

@@ -25,11 +25,11 @@ class DataContext(var vertx: Vertx) : AbstractModule() {
     @Singleton
     fun provideClient(): MySQLConnectOptions {
         return MySQLConnectOptions()
-            .setHost("localhost")
-            .setPort(3308)
+            .setHost("192.168.1.2")
+            .setPort(3306)
             .setDatabase("account")
-            .setUser("ex7ept")
-            .setPassword("ex7ept")
+            .setUser("account")
+            .setPassword("account")
             .setCachePreparedStatements(true)
             .setPreparedStatementCacheMaxSize(250)
             .setPreparedStatementCacheSqlLimit(2048)
