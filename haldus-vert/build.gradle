@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClassName = 'io.vertx.core.Launcher'
+    mainClass.set("io.vertx.launcher.application.VertxApplication")
 }
 
 def mainVerticleName = 'org.featx.sta2ry.haldus.MainVerticle'
@@ -14,8 +14,8 @@ def doOnChange = './gradlew classes'
 dependencies {
     implementation("org.featx.spec:spec:${featxSpecVersion}")
     implementation(project(":haldus-spec"))
-    implementation(project(":haldus-norm"))
     implementation(project(":haldus-data"))
+    implementation(project(":haldus-norm"))
 
     implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
     implementation("io.vertx:vertx-service-discovery")
@@ -26,9 +26,9 @@ dependencies {
     implementation("io.vertx:vertx-health-check")
 
     implementation("io.vertx:vertx-web")
-    implementation("io.vertx:vertx-web-api-contract")
+//  implementation("io.vertx:vertx-web-api-contract")
     implementation("io.vertx:vertx-web-sstore-redis")
-    implementation("io.vertx:vertx-web-openapi")
+//  implementation("io.vertx:vertx-web-openapi")
     implementation("io.vertx:vertx-web-client")
     implementation("io.vertx:vertx-web-validation")
 
@@ -36,10 +36,16 @@ dependencies {
     implementation("io.vertx:vertx-sql-client")
 //  implementation("io.vertx:vertx-rx-java3")
 //  implementation("io.vertx:vertx-reactive-streams")
-    implementation("com.google.inject:guice:$guiceVersion")
+    implementation("com.google.inject:guice:5.0.1")
+    implementation("com.google.dagger:dagger:$daggerVersion")
+
     implementation("io.vertx:vertx-lang-kotlin")
     implementation("io.vertx:vertx-lang-kotlin-coroutines")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    implementation("io.vertx:vertx-auth-jwt")
+    implementation("io.vertx:vertx-auth-oauth2")
+    implementation("at.favre.lib:bcrypt:0.10.2")
 
     testImplementation("io.vertx:vertx-junit5")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -55,5 +61,5 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
 }
 
 run {
-    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+    args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClass", "--on-redeploy=$doOnChange"]
 }

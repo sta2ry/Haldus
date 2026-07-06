@@ -23,7 +23,7 @@ class UserInfoServiceImpl : UserInfoService {
     @Inject
     private lateinit var idGenerator: IdGenerate
 
-    override fun create(user: UserInfoSave): Future<UserInfoShow> {
+    override fun create(user: AccountSave): Future<AccountShow> {
         if (StringUtil.isBlank(user.code)) {
             user.code = String.format("%s%s", "UIF", idGenerator.nextId().toString(36))
         }
@@ -32,7 +32,7 @@ class UserInfoServiceImpl : UserInfoService {
             .map { UserConvertUtil.toUserInfoShow(it) }
     }
 
-    override fun update(user: UserInfoSave): Future<UserInfoShow> {
+    override fun update(user: AccountSave): Future<AccountShow> {
         val userInfoEntity = UserConvertUtil.toUserInfoEntity(user)
         return userInfoRepo.connectionPool.withTransaction { tx ->
             userInfoRepo.retrieveOne(user.code, tx).map {
@@ -46,13 +46,13 @@ class UserInfoServiceImpl : UserInfoService {
         return userInfoRepo.delete(code, null)
     }
 
-    override fun findByCode(code: String): Future<UserInfoDetail> {
+    override fun findByCode(code: String): Future<AccountDetail> {
         return userInfoRepo.retrieveOne(code, null).map {
             UserConvertUtil.toUserInfoDetail(it)
         }
     }
 
-    override fun page(page: UserInfoPageRequest): Future<PageResponse<UserInfoItem>> {
+    override fun page(page: AccountPageRequest): Future<PageResponse<AccountItem>> {
         val userCriteria = UserConvertUtil.toUserInfoCriteria(page)
         return userInfoRepo.connectionPool.withTransaction { tx ->
             val total = AtomicLong(0L)

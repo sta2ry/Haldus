@@ -13,11 +13,11 @@ class UserInfoEndpoint : UserInfoHandler {
     @Inject
     private lateinit var userInfoService: UserInfoService
 
-    override fun postUserInfo(userInfoSave: UserInfoSave): Future<UserInfoShow> {
-        return userInfoService.create(userInfoSave)
+    override fun postUserInfo(accountSave: AccountSave): Future<AccountShow> {
+        return userInfoService.create(accountSave)
     }
 
-    override fun getUserInfo(userCode: String): Future<UserInfoDetail> {
+    override fun getUserInfo(userCode: String): Future<AccountDetail> {
         return userInfoService.findByCode(userCode)
     }
 
@@ -25,7 +25,7 @@ class UserInfoEndpoint : UserInfoHandler {
         return userInfoService.delete(userCode)
     }
 
-    override fun page(userInfoPageRequest: UserInfoPageRequest): Future<PageResponse<UserInfoItem>> {
-        return userInfoService.page(userInfoPageRequest)
+    override fun page(accountPageRequest: AccountPageRequest): Future<PageResponse<AccountItem>> {
+        return userInfoService.page(accountPageRequest)
     }
 }

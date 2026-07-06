@@ -3,19 +3,22 @@ package org.featx.sta2ry.haldus
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import io.vertx.core.Vertx
+import io.vertx.mysqlclient.MySQLBuilder
 import io.vertx.mysqlclient.MySQLConnectOptions
-import io.vertx.mysqlclient.MySQLPool
 import io.vertx.sqlclient.Pool
 import io.vertx.sqlclient.PoolOptions
-import org.featx.sta2ry.haldus.repo.UserInfoRepo
-import org.featx.sta2ry.haldus.repo.UserInfoRepository
+import org.featx.sta2ry.haldus.repo.AccountRepo
+import org.featx.sta2ry.haldus.repo.AccountRepository
+import org.featx.sta2ry.haldus.repo.AuthRepo
+import org.featx.sta2ry.haldus.repo.AuthRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 class DataContext(var vertx: Vertx) : AbstractModule() {
 
     override fun configure() {
-        bind(UserInfoRepo::class.java).to(UserInfoRepository::class.java).`in`(Singleton::class.java)
+        bind(AccountRepo::class.java).to(AccountRepository::class.java).`in`(Singleton::class.java)
+        bind(AuthRepo::class.java).to(AuthRepository::class.java).`in`(Singleton::class.java)
     }
 
     @Provides
@@ -35,12 +38,15 @@ class DataContext(var vertx: Vertx) : AbstractModule() {
     @Provides
     @Singleton
     fun providePool(sqlConnect: MySQLConnectOptions): Pool {
-        return MySQLPool.pool(
-            vertx, sqlConnect,
-            PoolOptions()
-                .setMaxSize(20)
-                .setIdleTimeout(10).setIdleTimeoutUnit(TimeUnit.SECONDS)
-                .setConnectionTimeout(10).setConnectionTimeoutUnit(TimeUnit.SECONDS)
-        )
+        return MySQLBuilder.pool()
+            .connectingTo(sqlConnect)
+            .with(
+                PoolOptions()
+                    .setMaxSize(20)
+                    .setIdleTimeout(10).setIdleTimeoutUnit(TimeUnit.SECONDS)
+                    .setConnectionTimeout(10).setConnectionTimeoutUnit(TimeUnit.SECONDS)
+            )
+            .using(vertx)
+            .build()
     }
 }

@@ -1,7 +1,9 @@
+.gradle
 .idea
 .vscode
 .atom
 .sublime
+.kotlin
 
 *.class
 *.iml

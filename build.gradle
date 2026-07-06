@@ -9,14 +9,14 @@ allprojects {
       mavenContent {snapshotsOnly()}
     }
     maven {
-      url = uri("https://packages.aliyun.com/maven/repository/2010689-release-56y7uo")
+      url = uri("${MVN_RELEASE}")
       credentials {
         username = "${MVN_USERNAME}"
         password = "${MVN_PASSWORD}"
       }
     }
     maven {
-      url = uri("https://packages.aliyun.com/maven/repository/2010689-snapshot-bcJ57J/")
+      url = uri("${MVN_SNAPSHOTS}")
       credentials {
         username = "${MVN_USERNAME}"
         password = "${MVN_PASSWORD}"

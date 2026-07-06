@@ -1,6 +1,7 @@
 rootProject.name = 'haldus'
-include("haldus-spec")
-include("haldus-vert")
-include("haldus-norm")
-include("haldus-bsns")
-include("haldus-data")
+
+include("haldus-spec")// Defined the apis/interfaces we implement, to facilitate the introduction by 2nd or 3rd parties
+include("haldus-vert")// Rely on norm to implement spec
+include("haldus-comn")// Common utils, like convert util, exception util, etc.
+include("haldus-norm")// Normalize the data, like convert entity to detail, etc.
+include("haldus-data")// Data access layer, like repository, etc.

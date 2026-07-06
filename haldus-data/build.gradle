@@ -4,16 +4,18 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":haldus-norm"))
-
+    
     implementation(platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
     implementation("io.vertx:vertx-mysql-client")
     implementation("io.vertx:vertx-lang-kotlin")
     implementation("io.vertx:vertx-lang-kotlin-coroutines")
 
-    implementation("com.zaxxer:HikariCP:$hikariVersion")
+    implementation("com.alibaba:druid:$druidVersion")
     implementation("org.mariadb:r2dbc-mariadb:1.0.1")
-    implementation("com.google.inject:guice:$guiceVersion")
+    implementation("com.google.dagger:dagger:$daggerVersion")
+    implementation("com.google.inject:guice:5.0.1")
+
+    implementation("at.favre.lib:bcrypt:0.10.2")
 
     compileOnly("org.featx.spec:spec:${featxSpecVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")

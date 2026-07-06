@@ -1,6 +1,5 @@
 package org.featx.sta2ry.haldus.repo
 
-
 import io.vertx.core.Future
 import io.vertx.mysqlclient.MySQLClient.LAST_INSERTED_ID
 import io.vertx.sqlclient.Pool
@@ -24,20 +23,23 @@ class UserInfoRepository : UserInfoRepo {
         get() = sqlClient
 
     private fun toUserInfoEntity(row: Row): UserInfoEntity {
-        val result = UserInfoEntity.builder()
-            .username(row.getString("username"))
-            .enable(row.getBoolean("enable"))
-            .email(row.getString("email")).emailVerified(row.getBoolean("email_verified"))
-            .phone(row.getString("phone")).phoneVerified(row.getBoolean("phone_verified"))
-            .avatar(row.getString("avatar"))
-            .build()
-        result.id = row.getLong("id")
-        result.code = row.getString("code")
-        result.name = row.getString("name")
-        result.type = row.getInteger("type")
-        result.createdAt = row.getLocalDateTime("created_at")
-        result.updatedAt = row.getLocalDateTime("updated_at")
-        return result
+        val entity = UserInfoEntity(
+            username = row.getString("username"),
+            enable = row.getBoolean("enable"),
+            email = row.getString("email"),
+            phone = row.getString("phone"),
+            emailVerified = row.getBoolean("email_verified"),
+            phoneVerified = row.getBoolean("phone_verified"),
+            avatar = row.getString("avatar"),
+            password = row.getString("password"),
+        )
+        entity.id = row.getLong("id")
+        entity.code = row.getString("code")
+        entity.name = row.getString("name")
+        entity.type = row.getInteger("type")
+        entity.createdAt = row.getLocalDateTime("created_at")
+        entity.updatedAt = row.getLocalDateTime("updated_at")
+        return entity
     }
 
     override fun create(user: UserInfoEntity, txConnect: SqlClient?): Future<UserInfoEntity> {
@@ -66,14 +68,22 @@ class UserInfoRepository : UserInfoRepo {
         val values = mutableListOf<Any>()
         if (StringUtil.isNotBlank(user.name)) {
             sets.append("name=?,")
-            values.add(user.name)
+            values.add(user.name as Any)
         }
         if (StringUtil.isNotBlank(user.email)) {
             sets.append("email=?,")
-            values.add(user.email)
+            values.add(user.email as Any)
         }
-        values.add(user.code)
-        return conn.preparedQuery(String.format("update t_user_info set %s where code = ?", sets.toString()))
+        if (user.enable != null) {
+            sets.append("enable=?,")
+            values.add(user.enable as Any)
+        }
+        if (StringUtil.isNotBlank(user.avatar)) {
+            sets.append("avatar=?,")
+            values.add(user.avatar as Any)
+        }
+        values.add(user.code as Any)
+        return conn.preparedQuery("update t_user_info set $sets where code = ?")
             .execute(Tuple.from(values))
             .map { it.first().get(Integer::class.java, "row") > 0 }
     }
@@ -107,6 +117,6 @@ class UserInfoRepository : UserInfoRepo {
         val conn = txConnect ?: sqlClient
         return conn.preparedQuery("select * from t_user_info where code = ? and deleted = ? limit ?,?")
             .execute(Tuple.of(criteria.code, false, page.offset, page.size))
-            .map { it.map(this::toUserInfoEntity) }
+            .map { rows -> rows.map { row -> toUserInfoEntity(row) } }
     }
 }

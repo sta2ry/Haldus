@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":haldus-spec"))
+    implementation(project(":haldus-data"))
 
     compileOnly("org.featx.spec:spec:${featxSpecVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
