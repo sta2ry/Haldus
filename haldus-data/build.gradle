@@ -13,7 +13,7 @@ dependencies {
     implementation("com.alibaba:druid:$druidVersion")
     implementation("org.mariadb:r2dbc-mariadb:1.0.1")
     implementation("com.google.dagger:dagger:$daggerVersion")
-    implementation("com.google.inject:guice:5.0.1")
+    implementation("com.google.inject:guice:7.0.0")
 
     implementation("at.favre.lib:bcrypt:0.10.2")
 

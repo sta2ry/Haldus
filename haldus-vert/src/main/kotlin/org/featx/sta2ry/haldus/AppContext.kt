@@ -20,7 +20,7 @@ import org.featx.sta2ry.haldus.repo.UserInfoRepository
 import org.featx.sta2ry.haldus.service.*
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 
 class AppContext(var vertx: Vertx) : AbstractModule() {

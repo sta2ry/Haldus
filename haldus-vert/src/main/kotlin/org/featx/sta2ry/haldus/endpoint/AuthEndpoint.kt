@@ -8,8 +8,8 @@ import org.featx.spec.model.BaseResponse
 import org.featx.sta2ry.haldus.handler.AuthHandler
 import org.featx.sta2ry.haldus.model.*
 import org.featx.sta2ry.haldus.service.AuthService
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class AuthEndpoint : AuthHandler {

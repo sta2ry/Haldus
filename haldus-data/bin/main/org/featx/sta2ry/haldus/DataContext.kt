@@ -12,7 +12,7 @@ import org.featx.sta2ry.haldus.repo.AccountRepository
 import org.featx.sta2ry.haldus.repo.AuthRepo
 import org.featx.sta2ry.haldus.repo.AuthRepository
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 class DataContext(var vertx: Vertx) : AbstractModule() {
 

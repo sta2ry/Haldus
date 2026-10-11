@@ -5,8 +5,8 @@ import io.vertx.ext.auth.JWTOptions
 import io.vertx.ext.auth.jwt.JWTAuth
 import org.featx.sta2ry.haldus.model.TokenResponse
 import org.featx.sta2ry.haldus.model.UserBrief
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class TokenServiceImpl : TokenService {

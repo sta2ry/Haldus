@@ -1,7 +1,7 @@
 package org.featx.sta2ry.haldus.service
 
 import at.favre.lib.crypto.bcrypt.BCrypt
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Singleton
 class PasswordServiceImpl : PasswordService {

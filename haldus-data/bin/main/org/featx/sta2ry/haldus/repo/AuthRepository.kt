@@ -10,8 +10,8 @@ import org.featx.spec.feature.IdGenerate
 import org.featx.sta2ry.haldus.criteria.AuthCriteria
 import org.featx.sta2ry.haldus.entity.AccountAuthEntity
 import org.featx.sta2ry.haldus.entity.AccountOAuthEntity
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class AuthRepository : AuthRepo {

@@ -8,8 +8,8 @@ import io.vertx.ext.auth.oauth2.OAuth2Auth
 import io.vertx.ext.auth.oauth2.OAuth2AuthorizationURL
 import io.vertx.ext.auth.oauth2.OAuth2Options
 import io.vertx.ext.web.client.WebClient
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class OAuthServiceImpl : OAuthService {

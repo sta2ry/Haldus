@@ -11,8 +11,8 @@ import org.featx.sta2ry.haldus.util.UserConvertUtil
 import java.util.concurrent.atomic.AtomicLong
 import java.util.stream.Collectors
 
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class UserInfoServiceImpl : UserInfoService {

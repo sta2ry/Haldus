@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id 'com.gradleup.shadow' version '9.0.0-beta10'
+    id 'com.gradleup.shadow' version '9.6.1'
     id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
 }
 
@@ -37,7 +37,7 @@ dependencies {
     implementation("io.vertx:vertx-sql-client")
 //  implementation("io.vertx:vertx-rx-java3")
 //  implementation("io.vertx:vertx-reactive-streams")
-    implementation("com.google.inject:guice:5.0.1")
+    implementation("com.google.inject:guice:7.0.0")
     implementation("com.google.dagger:dagger:$daggerVersion")
 
     implementation("io.vertx:vertx-lang-kotlin")
@@ -49,7 +49,7 @@ dependencies {
     implementation("io.vertx:vertx-auth-oauth2")
     implementation("at.favre.lib:bcrypt:0.10.2")
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.22.3")
 
     testImplementation("io.vertx:vertx-junit5")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")

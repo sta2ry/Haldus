@@ -7,8 +7,8 @@ import org.featx.sta2ry.haldus.entity.AccountAuthEntity
 import org.featx.sta2ry.haldus.entity.AccountOAuthEntity
 import org.featx.sta2ry.haldus.model.*
 import org.featx.sta2ry.haldus.repo.AuthRepo
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class AuthServiceImpl : AuthService {

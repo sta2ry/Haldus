@@ -10,8 +10,8 @@ import org.featx.spec.model.PageRequest
 import org.featx.spec.util.StringUtil
 import org.featx.sta2ry.haldus.criteria.UserInfoCriteria
 import org.featx.sta2ry.haldus.entity.UserInfoEntity
-import javax.inject.Inject
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 
 @Singleton
 class AccountRepository : AccountRepo {
