@@ -3,27 +3,67 @@
 image:https://img.shields.io/badge/haldus-1.0.0-orange.svg[link="https://github.com/sta2ry/haldus"]
 
 @Powered by
-image:https://img.shields.io/badge/vert.x-3.7.1-purple.svg[link="https://vertx.io"]
 
-This application was generated using http://start.vertx.io
+image:https://img.shields.io/badge/vert.x-5.2.1-purple.svg[link="https://vertx.io"]
+image:https://img.shields.io/badge/kotlin-2.4.21-blue.svg[link="https://kotlinlang.org"]
 
-== Building
+== 介绍
 
-To launch your tests:
-```
-./gradlew clean test
-```
+Haldus（御夫座柱一星）是 **sta2ry 星宇星群**中的用户基础服务。
 
-To package your application:
-```
+在 sta2ry 星宇星群中，每个库都以一个星座或星座中的恒星命名——Haldus 取自御夫座（Auriga），御夫即驭者，寓意**将用户服务好**。
+
+作为通用的用户基础微服务，Haldus 不绑定任何特定业务领域（如交易所、支付等），任何需要用户体系的业务均可直接复用：
+
+* 账号（Account）与用户信息（UserInfo）
+* 认证（Auth）与第三方授权（OAuth）
+* 密码管理与 Token 令牌
+* 用户联系方式（Contact）
+* 第三方平台绑定（UserLinkBind）
+* 注册来源渠道（UserSource）
+* 推荐码体系：建立推荐码、绑定推荐人与合作商
+
+基础但完备，通用且可扩展。
+
+== 技术栈
+
+|=======================
+|框架/库   | 版本
+| Vert.x    | 5.2.1
+| Kotlin    | 2.4.21
+| Guice     | 7.0.0
+| Dagger    | 2.60.1
+| Lombok    | 1.18.48
+| Druid     | 1.2.28
+|=======================
+
+== 运行
+
+启动应用：
+
+[source,bash]
+----
+./gradlew :haldus-vert:run
+----
+
+应用默认监听 8888 端口。
+
+== 构建
+
+编译打包：
+
+[source,bash]
+----
 ./gradlew clean assemble
-```
+----
 
-To run your application:
-```
-./gradlew clean run
-```
+运行测试：
 
-== Help
+[source,bash]
+----
+./gradlew clean test
+----
+
+== 帮助
 
 * https://vertx.io/docs/[Vert.x Documentation]
